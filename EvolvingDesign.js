@@ -1,6 +1,6 @@
 // Change nDesigns here to set the number of designs in the population
 // test
-const gen0 = new Generation(4) 
+const gen0 = new Generation(2) 
 
 let newGenerationButton 
 
@@ -16,6 +16,7 @@ function setup() {
   })
   gen0.init() 
 }
+
 
 function draw() { 
   background (0)// purple:(120,80,210)

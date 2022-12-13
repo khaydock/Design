@@ -7,7 +7,7 @@ class Seed {
     // The position of a seed is pos (before or while dropping)
     this.pos = createVector(x, y) 
     this.design = design
-    this.seediam = 10
+    this.seediam = 9
   
     //The seed position in the design is podPos (after seed dropped)
 
@@ -41,13 +41,12 @@ class Seed {
 
   draw() {
     // Draw a seed
-    push()
-    translate(this.pos.x, -84+this.pos.y)
+
     // stroke(this.seedR, this.seedG, this.seedB)
     strokeWeight(1)
     fill(250, 220, 20)
-    circle(0, 0, 10)
-    pop()
+    circle(this.pos.x, this.pos.y, 8)
+
   }
 
   // Drop the seeds to the point just above the ground

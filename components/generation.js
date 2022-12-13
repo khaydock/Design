@@ -3,7 +3,7 @@ class Generation {
   // The number of designs is nDesigns
 
   constructor(nDesigns = 3) {
-    this.nDesigns = nDesigns
+    this.nDesigns = 4
     this.designs = []
     this.selectedDesigns = []
     this.droppedSeeds = []
@@ -60,7 +60,7 @@ class Generation {
 
     // select all designs if no design is selected 
     if(selectedDesigns.length == 0) selectedDesigns = this.designs
-    console.log ("Selected in gen", selectedDesigns.length )
+    // console.log ("Selected in gen", selectedDesigns.length )
 
     // For each design in the selectedDesigns array, all its seeds are put in the dropped seeds array
     selectedDesigns.forEach(design => {
@@ -76,12 +76,12 @@ class Generation {
     // just look in the x direction for now - later look in y direction as well
     for(let i = 0; i < this.nDesigns; i++) {
       let xpos = this.homePos[i]
-      console.log ("randx", xpos)
+      // console.log ("randx", xpos)
       // the above sets randx for selectedSeed
       let selectedSeed = this.selectSeed(this.droppedSeeds, xpos)
       this.droppedSeeds = this.droppedSeeds.filter(seed => seed.dropPoint.x != selectedSeed.dropPoint.x)
       let oldDesign = selectedSeed.design
-      console.log ("oldDesign", oldDesign)
+      // console.log ("oldDesign", oldDesign)
 
       let newGenes = this.getGenes(oldDesign)
       
@@ -129,7 +129,7 @@ class Generation {
     // Note that the genes in the new design will not be exactly the same as the genes of the parent design - random values nearby are found
 
     // Find new DesignLength genes
-    console.log ('oldDesign.genes.designHeight', oldDesign.genes.designHeight)
+    // console.log ('oldDesign.genes.designHeight', oldDesign.genes.designHeight)
     let newDesignHeight = oldDesign.genes.designHeight + floor(random(-30, 30))
 
     if (newDesignHeight < 80) { 
