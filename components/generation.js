@@ -88,8 +88,8 @@ class Generation {
       let newDesign = new Design(selectedSeed.dropPoint.x, height-100, newGenes)
 
 
-      // let len = this.design.genes.designHeight
-      // let wid = this.design.genes.designWidth
+      // let len = this.design.genes.bottomHeight
+      // let wid = this.design.genes.bottomWidth
 
       // let newDesign = new Design(xpos, ypos, len, wid)
       this.newGenerationDesigns.push(newDesign) 
@@ -128,19 +128,42 @@ class Generation {
     // Make new genes for the new design
     // Note that the genes in the new design will not be exactly the same as the genes of the parent design - random values nearby are found
 
-    // Find new DesignLength genes
-    // console.log ('oldDesign.genes.designHeight', oldDesign.genes.designHeight)
-    let newDesignHeight = oldDesign.genes.designHeight + floor(random(-30, 30))
+     // Find new designHeight genes
+     let newdesignHeight = oldDesign.genes.designHeight + floor(random(-20, 20))
 
-    if (newDesignHeight < 80) { 
-      newDesignHeight = 80
+     if (newdesignHeight < 180) { 
+       newdesignHeight = 180
+     }
+
+    // Find new bottomHeight genes
+    let newbottomHeight = oldDesign.genes.bottomHeight + floor(random(-30, 30))
+    if (newbottomHeight < 80) { 
+      newbottomHeight = 80
     }
 
-    // Find new DesignWidth genes
-    let newDesignWidth = oldDesign.genes.designWidth + floor(random(-30, 30))
-      if (newDesignHeight < 60) { 
-        newDesignHeight = 60
+    // Find new bottomWidth genes
+    let newbottomWidth = oldDesign.genes.bottomWidth + floor(random(-30, 30))
+      if (newbottomWidth < 60) { 
+        newbottomWidth = 60
       }
+
+       // Find new topHeight genes
+    let newtopHeight = oldDesign.genes.topHeight + floor(random(-30, 30))
+    if (newtopHeight < 80) { 
+      newtopHeight = 80
+    }
+
+    // Find new topWidth genes
+    let newtopWidth = oldDesign.genes.topWidth + floor(random(-30, 30))
+      if (newtopHeight < 60) { 
+        newtopHeight = 60
+      }
+
+    // Find new connectHeight genes
+    let newconnectHeight = oldDesign.genes.connectHeight + floor(random(-20, 20))
+    if (newconnectHeight < 20) { 
+      newconnectHeight = 20
+    }
 
   // Make new number of seeds in each design
   // let newSeeds = oldDesign.genes.numSeeds + floor(random(-1.3, 1.3))
@@ -148,8 +171,12 @@ class Generation {
   // if (newSeeds > 80) newSeeds = 80
 
   let newGenes = {
-    designHeight: abs(newDesignHeight),
-    designWidth: abs(newDesignWidth)
+    designHeight: abs(newdesignHeight),
+    bottomHeight: abs(newbottomHeight),
+    bottomWidth: abs(newbottomWidth),
+    topHeight: abs(newtopHeight),
+    topWidth: abs(newtopWidth),
+    connectHeight: abs(newconnectHeight)
   }
   
   return newGenes

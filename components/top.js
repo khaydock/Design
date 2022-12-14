@@ -25,7 +25,7 @@ class Top {
 
     let len = this.design.genes.topHeight
     let wid1 = this.design.genes.topWidth
-    let wid2 = wid1 * .5
+    let wid2 = wid1 * 1.2
     let x = this.pos.x
     let y = this.pos.y
 
@@ -33,12 +33,13 @@ class Top {
       translate (x,y)
 
       line(0, 0,    0, -len) 
-      bezier (0, 0,    -wid1, -40,    -wid2, -len+60,    0, -len) 
-      bezier (0, 0,    wid1, 40,    wid2, -len-60,    0, -len) 
+      bezier (0, 0,    -wid1, len-50,    -wid2, -len*1.5,    0, -len*2) 
+      bezier (0, 0,    wid1, 40,    wid2, -len-30,    0, -len*2) 
 
       fill ('blue')
       // Draw the anchor points
-      circle (-wid1, -40,5)
+      circle(0,0,2)
+      circle (-wid1, -40,20)
       circle (-wid2, -len+60, 5)
       circle (wid1, 40,10)
       circle (wid2, -len-60, 7)

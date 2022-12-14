@@ -11,17 +11,18 @@ class Design {
     this.seeds = []
     this.nSeeds = 10
    
-
     if(genes != null) {
       this.setGenes(genes)
     } 
     else {
     // Set the initial genes for each design at the start of the simulation 
       let randomGenes = {
-        designHeight: (random(200,300)),
-        designWidth: (random(50,100)),
-        topHeight: (random(20,80)),
-        topWidth: (random(50,200))
+        designHeight: random (200,300),
+        bottomHeight: (random(200,300)),
+        bottomWidth: (random(60,100)),
+        topHeight: (random(50,80)),
+        topWidth: (random(80,120)),
+        connectHeight: (random(80,100))
       }
       this.setGenes(randomGenes)
     }
@@ -32,15 +33,15 @@ class Design {
   init() {
 
     // Define the position of the top
-    this.topPosy = random(-600, -400)
+    this.topPosy = -this.genes.connectHeight*2//random(-600, -400)
     // Define the top
     this.top = new Top(0, this.topPosy, this)
 
     // Define the seeds
     for(let i = 0; i < this.nSeeds; i++) {
-      // Make the seeds at random positions inside a circle of diameter a little less than whichever is smaller, designHeight or designWidth
-      this.diam = this.genes.designHeight*.45
-      if (this.genes.designWidth*.45 < this.diam) this.diam = this.genes.designWidth*.45
+      // Make the seeds at random positions inside a circle of diameter a little less than whichever is smaller, bottomHeight or bottomWidth
+      this.diam = this.genes.bottomHeight*.45
+      if (this.genes.bottomWidth*.45 < this.diam) this.diam = this.genes.bottomWidth*.45
    
       let dist = random (0, this.diam)
       let ang = random (0,360)
@@ -50,15 +51,42 @@ class Design {
       this.seeds.push(seed)
       }
 
+      // Define the appendages
+      this.appendage = []
+  
+      // numAp is the number of pairs of appendages  
+      this.numAp = 4 
+  
+      //Find y-positions of each pair of appendages
+      this.apPos = [0]
+      this.apPosIndex = 1
+      let sum = 0
+        for(let i = 0; i < this.numAp-1; i++) {
+          const r = Math.random(1,2)
+          sum += r
+          this.apPos.push(sum)
+        }
+        // Random appendage positions will be mapped to be between the beginning of the connector and 80% to the bottom
+        this.apPos = this.apPos.map(value => Math.floor((value / sum) * this.rootLength*.8))
+       
+      // Define appendages
+      for (let i = 0; i < this.apNum; i++) {
+        // let dir = floor(random(0,2))
+        // if (dir == 0) { dir = -1}
+        let dir = 1
+        let p = this.apPos[i]
+        this.appendage[i] = new Appendage(0,p, dir)
+       }
+       
 
-      // let ysep = (floor(this.genes.designHeight)/this.nSeeds)
-      // let y = height-this.genes.designHeight + (i*ysep)
+      // let ysep = (floor(this.genes.bottomHeight)/this.nSeeds)
+      // let y = height-this.genes.bottomHeight + (i*ysep)
       // const seed = new Seed(this.pos.x, y, this)
       // this.seeds.push(seed)
     // }
 
-    // this.designHeight = this.genes.designHeight
-    // this.designWidth = this.genes.designWidth
+    // this.bottomHeight = this.genes.bottomHeight
+    // this.bottomWidth = this.genes.bottomWidth
 
   }
         
@@ -69,7 +97,7 @@ class Design {
       stroke('red')
       strokeWeight(3)
       noFill()
-      circle(this.pos.x, this.pos.y-this.genes.designHeight, 200)  
+      circle(this.pos.x, this.pos.y-this.genes.bottomHeight, 200)  
     }    
        
     // Draw the design
@@ -77,8 +105,8 @@ class Design {
     fill(210, 140, 190)
     noStroke()
 
-    let len = this.genes.designHeight
-    let wid1 = this.genes.designWidth
+    let len = this.genes.bottomHeight
+    let wid1 = this.genes.bottomWidth
     let wid2 = wid1 * .5
     let x = this.pos.x
     let y = this.pos.y
@@ -97,17 +125,24 @@ class Design {
       circle (wid1, 40,10)
       circle (wid2, -len-60, 12)
 
-      // Draw connector
-      fill(30,180,120)
-      quad (-this.diam,-len/2, this.diam,-len/2, wid1/2,this.topPosy, -wid1/2,this.topPosy)
-
       // Draw the top
       this.top.draw()
+
+      // Draw the appengages
+      for(let i = 0; i < this.numAp; i++) {
+
+      }
+
+
+       // Draw connector
+       fill(180,170,20)
+       let midy = this.topPosy - this.genes.connectHeight
+       quad (-this.diam,-len/2, this.diam,-len/2, wid1/2,midy, -wid1/2,midy) 
 
       // Draw the nucleus
       fill (140,90,190)
       noStroke()
-      circle(0,-len/2,this.diam*2.3)
+      circle(0,midy,this.diam*2.3)
 
       // Call Seeds to make and draw the seeds
       for (let i = 0; i < this.seeds.length; i++) {
@@ -115,7 +150,7 @@ class Design {
           // seed.update()
           // seed.make()
           push ()
-            translate (0, -this.genes.designHeight/2)
+            translate (0, midy)
             seed.draw()
           pop ()
         })
@@ -124,7 +159,7 @@ class Design {
   }
      
   make() {
-    this.currHeight = this.genes.designHeight   
+    this.currHeight = this.genes.bottomHeight   
         }
  
 
@@ -163,7 +198,7 @@ class Design {
   }
 
   initFromGenes() {
-    this.designHeight = this.genes.designHeight
-    this.designWidth = this.genes.designWidth
+    this.bottomHeight = this.genes.bottomHeight
+    this.bottomWidth = this.genes.bottomWidth
   }
 }
